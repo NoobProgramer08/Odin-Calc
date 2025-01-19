@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Odin Calculator</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <div class="control">
+      <div class="wrapper">
+        <input type="text" readonly id="input" />
+        <div class="nums">
+          <div class="operators">
+            <button onclick="appendNumber(event)">+</button>
+            <button onclick="appendNumber(event)">-</button>
+            <button onclick="appendNumber(event)">*</button>
+            <button onclick="appendNumber(event)">÷</button>
+          </div>
+          <div class="numbers">
+            <div class="numsSection">
+              <button onclick="appendNumber(event)">7</button>
+              <button onclick="appendNumber(event)">8</button>
+              <button onclick="appendNumber(event)">9</button>
+            </div>
+            <div class="numsSection">
+              <button onclick="appendNumber(event)">4</button>
+              <button onclick="appendNumber(event)">5</button>
+              <button onclick="appendNumber(event)">6</button>
+            </div>
+            <div class="numsSection">
+              <button onclick="appendNumber(event)">1</button>
+              <button onclick="appendNumber(event)">2</button>
+              <button onclick="appendNumber(event)">3</button>
+            </div>
+            <div class="numsSection">
+              <button onclick="appendNumber(event)">0</button>
+              <button id="clear">C</button>
+              <button id="evaluate">=</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="assets/js/script.js"></script>
+  </body>
+</html>
