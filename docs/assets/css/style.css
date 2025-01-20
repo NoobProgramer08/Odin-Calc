@@ -72,3 +72,6 @@ body {
 .numsSection #evaluate {
   background-color: orange;
 }
+.numsSection img {
+  height: 80px;
+}

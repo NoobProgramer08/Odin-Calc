@@ -1,20 +1,66 @@
 const clearBtn = document.querySelector("#clear");
-const currentStatus = document.querySelector("#input");
 const evaluate = document.querySelector("#evaluate");
-let operatorInstance = 0;
+const currentStatus = document.querySelector("#input");
+const decimalButton = document.querySelector("#decimal");
+const backSpace = document.querySelector("#delete");
+let operatorInstance = 0, isFloat = false;
+
 
 
 clearBtn.addEventListener('click',clearInput);
 evaluate.addEventListener('click',evaluateNumbers);
+decimalButton.addEventListener('click',convertToFloat);
+backSpace.addEventListener('click',deleteLast);
+
+document.addEventListener('DOMContentLoaded', ()=> { currentStatus.value = "" });
 
 
 function appendNumber(event){
-const target = event.target.textContent;
-currentStatus.value += target;
+    const target = event.target.textContent;
+    const status = currentStatus.value += target;
+   
+
+    if(checkDecimalPoint()){
+        const sub = status.split("");
+        sub.splice(-1,1);
+        currentStatus.value = sub.join("");
+        
+    }
+
+
     checkOperator();
 }
 
+function convertToFloat(){
+    isFloat = true;
+
+}
+
+function checkDecimalPoint(){
+    const getCurrent = currentStatus.value;
+    const splut = getCurrent.split("");
+    let decimalCount = 0;
+    splut.forEach((values) => {
+        if(values === "."){
+            decimalCount++;
+    
+        }
+    });
+    return (decimalCount >= 2) ? true : false;
+
+}
+
+
+function deleteLast(){
+    const current = currentStatus.value.split("");
+    current.splice(-1,1);
+    currentStatus.value = current.join("");
+
+}
+
 TODO: //* This part might need refactoring
+     //* Needs Reviewing
+ 
 function checkOperator(){
     const currentValues = currentStatus.value.split("");
     let firstOperator = "";
@@ -29,28 +75,25 @@ function checkOperator(){
 });
 
 
-    
     if(operatorInstance >= 2){
         if(firstOperator === "+"){
             const splitValue = currentStatus.value.split("+");
             const num1 = splitValue[0];
             const num2 = splitValue[1];
 
-            console.log(num1);
-            console.log(num2);
-            add(Number(num1),Number(num2));
+            (isFloat) ?  add(parseFloat(num1),parseFloat(num2)) : add(Number(num1),Number(num2));
     
         }else if(firstOperator === "-"){
             const splitValue = currentStatus.value.split("-");
             const num1 = splitValue[0];
             const num2 = splitValue[1];
-            subtract(Number(num1),Number(num2));
+            (isFloat) ?  subtract(parseFloat(num1),parseFloat(num2)) : subtract(Number(num1),Number(num2));
     
         }else if(firstOperator === "*"){
             const splitValue = currentStatus.value.split("*");
             const num1 = splitValue[0];
             const num2 = splitValue[1];
-            multiply(Number(num1),Number(num2));
+            (isFloat) ?  multiply(parseFloat(num1),parseFloat(num2)) : multiply(Number(num1),Number(num2));
     
         }else{
             const splitValue = currentStatus.value.split("/");
@@ -62,7 +105,7 @@ function checkOperator(){
                 return;
     
             }
-            divide(Number(num1),Number(num2));
+            (isFloat) ?  divide(parseFloat(num1),parseFloat(num2)) : divide(Number(num1),Number(num2));
         }
 
     }
@@ -75,6 +118,7 @@ function checkOperator(){
 
 function clearInput(){
     currentStatus.value = "";
+    isFloat = false;
 }
 
 function evaluateNumbers(){
@@ -99,7 +143,10 @@ function evaluateNumbers(){
         const split = numbers.split("+");
         const num1 = split[0];
         const num2 = split[1];
-        add(Number(num1),Number(num2));
+        console.log(isFloat);
+        console.log(parseFloat(num1));
+        console.log(parseFloat(num2));
+        (isFloat) ?  add(parseFloat(num1),parseFloat(num2)) : add(Number(num1),Number(num2));
 
     }else if(operation === "-"){
         const split = numbers.split("-");
@@ -129,22 +176,38 @@ function evaluateNumbers(){
 }
 
 function add(num1,num2){
-    currentValue = (num1 + num2).toFixed();
+    if(!isFloat){
+        currentValue = (num1 + num2).toFixed();
+    }
+
+    currentValue = num1 + num2;
     displayEvaluation(currentValue);
 }
 
 function divide(num1,num2){
-    currentValue = (num1 / num2).toFixed()
+    if(!isFloat){
+        currentValue = (num1 / num2).toFixed()
+    }
+
+    currentValue = num1 / num2;
     displayEvaluation(currentValue);
 }
 
 function multiply(num1,num2){
-    currentValue = (num1 * num2).toFixed()
+    if(!isFloat){
+        currentValue = (num1 * num2).toFixed()
+    }
+
+    currentValue = num1 * num2;
     displayEvaluation(currentValue);
 }
 
 function subtract(num1,num2){
-    currentValue = (num1 - num2).toFixed()
+    if(!isFloat){
+        currentValue = (num1 - num2).toFixed()
+    }
+    currentValue = num1 - num2;
+    
     displayEvaluation(currentValue);
 
 }
@@ -156,4 +219,5 @@ function displayEvaluation(result){
         currentStatus.value = result;
     
     }
+    isFloat = false;
 }
