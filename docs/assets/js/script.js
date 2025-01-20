@@ -154,8 +154,6 @@ function displayEvaluation(result){
 
     if(convert !== "NaN"){
         currentStatus.value = result;
-
+    
     }
-    
-    
 }
