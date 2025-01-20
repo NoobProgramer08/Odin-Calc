@@ -11,13 +11,25 @@ clearBtn.addEventListener('click',clearInput);
 evaluate.addEventListener('click',evaluateNumbers);
 decimalButton.addEventListener('click',convertToFloat);
 backSpace.addEventListener('click',deleteLast);
+currentStatus.addEventListener('keypress',appendKeys);
 
 document.addEventListener('DOMContentLoaded', ()=> { currentStatus.value = "" });
 
+function appendKeys(e){
+    
+   currentStatus.value +=  `${e.target.textContent}`;
+
+}
 
 function appendNumber(event){
     const target = event.target.textContent;
     const status = currentStatus.value += target;
+  
+    if(status === "+" || status === "-" || status === "*" || status === "/"){
+        deleteLast();
+        return;
+
+    }
    
 
     if(checkDecimalPoint()){
@@ -59,8 +71,8 @@ function deleteLast(){
 }
 
 TODO: //* This part might need refactoring
-     //* Needs Reviewing
- 
+      //* Needs Reviewing
+
 function checkOperator(){
     const currentValues = currentStatus.value.split("");
     let firstOperator = "";
